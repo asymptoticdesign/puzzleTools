@@ -96,9 +96,43 @@ def transdelete(pattern,delete_size=1,dictionary=dictionary):
             if((character_list & wordCounter) == wordCounter):
                 print word, (character_list-wordCounter).items()
 
+def filter_words(dictionary=dictionary):
+    """
+    filter words according to a regexp
+    """
+    None
+
+def distance_from(pattern,dist=1,dictionary=dictionary):
+    """
+    Retrieve all words from the dictionary that are a given distance from the given pattern.
+    """
+    #turn word into a list of character
+    character_list = list(pattern.upper())
+    #sort the characters
+    character_list = Counter(character_list)
+    #check against all words in our dictionary
+    for word in dictionary:
+        if(len(word) == len(character_list)):
+            wordCounter = Counter(word)
+            if(sum((wordCounter - character_list).values()) == dist):                
+                print word, (wordCounter - character_list).items()
+
+def caesar_shift(encrypted_msg):
+    """
+    Show all possible caesar shifts of a given string.
+    """
+    for shift in range(26):
+        msg = ''
+        for character in encrypted_msg:
+            if character.isalpha():
+                val = ord(character.upper())
+                msg += chr(((val - 65 + shift) % 26) +  65)
+            else:
+                msg += character
+        print shift,":",msg
+            
+            
 #to-do:
 #words distance from
-#filter words (regex)
 
-#ceasar shift (stringtools)
 #word bank
