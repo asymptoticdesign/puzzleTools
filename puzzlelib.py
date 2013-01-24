@@ -58,7 +58,7 @@ def subanagram(pattern,min_size=0,dictionary=dictionary):
     #check against all words in our dictionary
     for word in dictionary:
         #check if words are the appropriate -- if not, they can't be anagrams of each other!
-        if((len(word) < len(character_list)) & (len(word) <= min_size)):
+        if((len(word) <= len(character_list)) & (len(word) >= min_size)):
             wordCounter = Counter(word)
             if((character_list & wordCounter) == wordCounter):
                 print word, (character_list - wordCounter).items()
