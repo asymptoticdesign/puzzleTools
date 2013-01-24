@@ -31,9 +31,9 @@ def anagram(pattern,dictionary=dictionary):
             if character_list == sorted_word:
                 print word
 
-def superanagram(pattern,super_size,dictionary=dictionary):
+def superanagram(pattern,max_size = 100, dictionary=dictionary):
     """
-    Find all superanagrams of length n+1
+    Find all subanagrams
     """
     #turn word into a list of character
     character_list = list(pattern.upper())
@@ -41,10 +41,27 @@ def superanagram(pattern,super_size,dictionary=dictionary):
     character_list = Counter(character_list)
     #check against all words in our dictionary
     for word in dictionary:
-        #check if words are the approprioate -- if not, they can't be anagrams of each other!
-        if(len(word) == len(character_list)+super_size):
-            if((character_list & Counter(word)) == character_list):
-                print word,
+        #check if words are the appropriate -- if not, they can't be anagrams of each other!
+        if((len(word) >= len(character_list)) & (len(word) <= max_size)):
+            wordCounter = Counter(word)
+            if((character_list & wordCounter) == character_list):
+                print word, (wordCounter - character_list).items()
+
+def subanagram(pattern,min_size=0,dictionary=dictionary):
+    """
+    Find all subanagrams
+    """
+    #turn word into a list of character
+    character_list = list(pattern.upper())
+    #sort the characters
+    character_list = Counter(character_list)
+    #check against all words in our dictionary
+    for word in dictionary:
+        #check if words are the appropriate -- if not, they can't be anagrams of each other!
+        if((len(word) < len(character_list)) & (len(word) <= min_size)):
+            wordCounter = Counter(word)
+            if((character_list & wordCounter) == wordCounter):
+                print word, (character_list - wordCounter).items()
 
 def transadd(pattern,add_size=1,dictionary=dictionary):
     """
@@ -57,7 +74,7 @@ def transadd(pattern,add_size=1,dictionary=dictionary):
     character_list = Counter(character_list)
     #check against all words in our dictionary
     for word in dictionary:
-        #check if words are the approprioate -- if not, they can't be anagrams of each other!
+        #check if words are the appropriate -- if not, they can't be anagrams of each other!
         if(len(word) == len(character_list) + add_size):
             wordCounter = Counter(word)
             if((character_list & wordCounter) == character_list):
@@ -73,15 +90,15 @@ def transdelete(pattern,delete_size=1,dictionary=dictionary):
     character_list = Counter(character_list)
     #check against all words in our dictionary
     for word in dictionary:
-        #check if words are the approprioate -- if not, they can't be anagrams of each other!
+        #check if words are the appropriate -- if not, they can't be anagrams of each other!
         if(len(word) + delete_size == len(character_list)):
             wordCounter = Counter(word)
             if((character_list & wordCounter) == wordCounter):
                 print word, (character_list-wordCounter).items()
 
 #to-do:
-#superanagram
-#subanagram
-#ceasar shift
 #words distance from
-#filter words
+#filter words (regex)
+
+#ceasar shift (stringtools)
+#word bank
