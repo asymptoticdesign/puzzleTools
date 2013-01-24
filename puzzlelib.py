@@ -6,6 +6,8 @@ Usage:
 Date Started: 2013 Jan
 Last Modified: 2013 Jan
 """
+
+import re
 import sys
 from collections import Counter
 
@@ -96,15 +98,9 @@ def transdelete(pattern,delete_size=1,dictionary=dictionary):
             if((character_list & wordCounter) == wordCounter):
                 print word, (character_list-wordCounter).items()
 
-def filter_words(dictionary=dictionary):
+def transmix(pattern,dist=1,dictionary=dictionary):
     """
-    filter words according to a regexp
-    """
-    None
-
-def distance_from(pattern,dist=1,dictionary=dictionary):
-    """
-    Retrieve all words from the dictionary that are a given distance from the given pattern.
+    Retrieve all words from the dictionary that are a given distance from the given pattern (including anagram)
     """
     #turn word into a list of character
     character_list = list(pattern.upper())
@@ -114,8 +110,30 @@ def distance_from(pattern,dist=1,dictionary=dictionary):
     for word in dictionary:
         if(len(word) == len(character_list)):
             wordCounter = Counter(word)
-            if(sum((wordCounter - character_list).values()) == dist):                
+            if(sum((wordCounter - character_list).values()) == dist):
                 print word, (wordCounter - character_list).items()
+
+def find_distance(pattern,dist=1,dictionary=dictionary):
+    """
+    Retrieve all words from the dictionary that are a given distance from the given pattern (including anagram)
+    """
+    #turn word into a list of character
+    character_list = list(pattern.upper())
+    #check against all words in our dictionary
+    for word in dictionary:
+        err = 0
+        word_list = list(word)
+        if(len(word_list) == len(character_list)):
+            for i in range(len(character_list)):
+                if word_list[i] == character_list[i]:
+                    #characters are the same
+                    None
+                else:
+                    err+=1
+                if err > dist:
+                    break
+                if i == len(character_list) - 1:
+                    print word
 
 def caesar_shift(encrypted_msg):
     """
@@ -126,12 +144,12 @@ def caesar_shift(encrypted_msg):
         for character in encrypted_msg:
             if character.isalpha():
                 val = ord(character.upper())
+
                 msg += chr(((val - 65 + shift) % 26) +  65)
             else:
                 msg += character
         print shift,":",msg
-            
-            
+
 #to-do:
 #words distance from
 
