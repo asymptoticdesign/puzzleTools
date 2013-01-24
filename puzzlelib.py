@@ -1,7 +1,7 @@
 """
 Title: puzzle lib
 Author: nathan lachenmyer
-Description: A python library to manipulate hubway data stored on a server.
+Description: A python library to manipulate strings for wordplay puzzles
 Usage:
 Date Started: 2013 Jan
 Last Modified: 2013 Jan
@@ -151,6 +151,7 @@ def caesar_shift(encrypted_msg):
         print shift,":",msg
 
 #to-do:
-#words distance from
-
-#word bank
+#string manipulations
+## sub bank
+## super bank
+## bank  
